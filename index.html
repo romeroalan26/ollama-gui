@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat con IA Local</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>🤖 Chat con IA Local</h1>
+        <p>
+          Conectado a Ollama - Modelo: <span id="currentModel">llama3:8b</span>
+        </p>
+        <button id="openSettingsBtn" class="settings-btn" title="Configuración">
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="3.5" />
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 8 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 8a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 8 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09A1.65 1.65 0 0 0 16 4.6a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 8c.14.31.22.65.22 1v.09A1.65 1.65 0 0 0 21 12c0 .35-.08.69-.22 1z"
+            />
+          </svg>
+        </button>
+      </header>
+
+      <div class="chat-container">
+        <div class="chat-messages" id="chatMessages">
+          <div class="message ai-message">
+            <div class="message-content">
+              <strong>IA:</strong> ¡Hola! Soy tu asistente de IA local. ¿En qué
+              puedo ayudarte hoy?
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input-container">
+          <div class="input-group">
+            <textarea
+              id="messageInput"
+              placeholder="Escribe tu mensaje aquí..."
+              rows="3"
+            ></textarea>
+            <button id="sendButton" class="send-button">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22,2 15,22 11,13 2,9"></polygon>
+              </svg>
+            </button>
+          </div>
+          <div class="status" id="status"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de configuración -->
+    <div id="settingsModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeSettingsBtn">&times;</span>
+        <h2>Configuración</h2>
+        <div class="setting-group">
+          <label for="modelSelect">Modelo:</label>
+          <select id="modelSelect">
+            <option value="llama3:8b" selected>llama3:8b</option>
+            <option value="llama3:70b">llama3:70b</option>
+            <option value="mistral:7b">mistral:7b</option>
+            <option value="codellama:7b">codellama:7b</option>
+          </select>
+        </div>
+        <div class="setting-group">
+          <label for="apiUrl">URL del API:</label>
+          <input
+            type="text"
+            id="apiUrl"
+            value="http://localhost:11434"
+            placeholder="http://localhost:11434"
+          />
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
