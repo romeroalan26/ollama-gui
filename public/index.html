@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat con IA Local</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>🤖 Chat con IA Local</h1>
+        <p>
+          Conectado a Ollama - Modelo: <span id="currentModel">llama3:8b</span>
+        </p>
+        <button id="openSettingsBtn" class="settings-btn" title="Configuración">
+          <img
+            src="./assets/settings.png"
+            alt="Configuración"
+            class="settings-icon"
+          />
+        </button>
+      </header>
+
+      <div class="chat-container">
+        <div class="chat-messages" id="chatMessages">
+          <div class="message ai-message">
+            <div class="message-content">
+              <strong>IA:</strong> ¡Hola! Soy tu asistente de IA local. ¿En qué
+              puedo ayudarte hoy?
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input-container">
+          <div class="input-group">
+            <textarea
+              id="messageInput"
+              placeholder="Escribe tu mensaje aquí..."
+              rows="3"
+            ></textarea>
+            <button id="sendButton" class="send-button">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22,2 15,22 11,13 2,9"></polygon>
+              </svg>
+            </button>
+          </div>
+          <div class="status" id="status"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de configuración -->
+    <div id="settingsModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeSettingsBtn">&times;</span>
+        <h2>Configuración</h2>
+        <div class="setting-group">
+          <label for="modelSelect">Modelo:</label>
+          <select id="modelSelect">
+            <option value="llama3:8b" selected>llama3:8b</option>
+            <option value="llama3:70b">llama3:70b</option>
+            <option value="mistral:7b">mistral:7b</option>
+            <option value="codellama:7b">codellama:7b</option>
+          </select>
+        </div>
+        <div class="setting-group">
+          <label for="apiUrl">URL del API:</label>
+          <input
+            type="text"
+            id="apiUrl"
+            value="http://localhost:11434"
+            placeholder="http://localhost:11434"
+          />
+        </div>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

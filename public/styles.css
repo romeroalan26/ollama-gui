@@ -1,0 +1,503 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #1a1a1a;
+  min-height: 100vh;
+  color: #e0e0e0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #e0e0e0;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.chat-container {
+  flex: 1;
+  background: #2d2d2d;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #404040;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background: #1e1e1e;
+}
+
+.message {
+  margin-bottom: 20px;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.message-content {
+  padding: 15px 20px;
+  border-radius: 18px;
+  max-width: 80%;
+  word-wrap: break-word;
+  line-height: 1.5;
+}
+
+.user-message {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user-message .message-content {
+  background: #4a90e2;
+  color: white;
+  margin-left: auto;
+}
+
+.ai-message .message-content {
+  background: #3a3a3a;
+  border: 1px solid #555;
+  color: #e0e0e0;
+}
+
+.chat-input-container {
+  padding: 20px;
+  background: #2d2d2d;
+  border-top: 1px solid #404040;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+#messageInput {
+  flex: 1;
+  padding: 15px;
+  border: 2px solid #555;
+  border-radius: 15px;
+  font-size: 16px;
+  resize: none;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+
+#messageInput:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+.send-button {
+  background: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 15px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+  height: 50px;
+}
+
+.send-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+}
+
+.send-button:active {
+  transform: translateY(0);
+}
+
+.send-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.status {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #999;
+  text-align: center;
+  min-height: 20px;
+}
+
+.settings {
+  margin-top: 20px;
+  background: #2d2d2d;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  border: 1px solid #404040;
+}
+
+.setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 200px;
+}
+
+.setting-group label {
+  font-weight: 600;
+  color: #e0e0e0;
+  font-size: 14px;
+}
+
+.setting-group select,
+.setting-group input {
+  padding: 10px;
+  border: 2px solid #555;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+
+.setting-group select:focus,
+.setting-group input:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+.typing-indicator {
+  display: flex;
+  gap: 5px;
+  padding: 15px 20px;
+  background: #3a3a3a;
+  border: 1px solid #555;
+  border-radius: 18px;
+  max-width: 80px;
+}
+
+.typing-dot {
+  width: 8px;
+  height: 8px;
+  background: #4a90e2;
+  border-radius: 50%;
+  animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+.typing-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes typing {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .settings {
+    flex-direction: column;
+  }
+
+  .setting-group {
+    min-width: auto;
+  }
+
+  .message-content {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    position: relative;
+    padding-top: 16px;
+    padding-bottom: 8px;
+  }
+  .header h1 {
+    font-size: 1.3rem;
+    text-align: center;
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .settings-btn {
+    top: 8px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    padding: 2px;
+    z-index: 10;
+  }
+  .settings-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+  .header p {
+    font-size: 0.95rem;
+    text-align: center;
+    margin-top: 8px;
+    margin-bottom: 0;
+  }
+  .settings-icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Estilos adicionales para modo oscuro */
+.status.success {
+  color: #4ade80;
+}
+
+.status.error {
+  color: #f87171;
+}
+
+.status.info {
+  color: #60a5fa;
+}
+
+/* Placeholder para inputs */
+#messageInput::placeholder {
+  color: #888;
+}
+
+.setting-group select option {
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+
+/* Mejoras visuales para modo oscuro */
+.message-content strong {
+  color: #4a90e2;
+}
+
+/* Hover effects mejorados */
+.send-button:hover {
+  background: #357abd;
+}
+
+.setting-group select:hover,
+.setting-group input:hover {
+  border-color: #666;
+}
+
+/* Estilos para elementos de markdown */
+.message-content code {
+  background: #1a1a1a;
+  color: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 0.9em;
+  border: 1px solid #555;
+}
+
+.message-content pre {
+  background: #1a1a1a;
+  border: 1px solid #555;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px 0;
+  overflow-x: auto;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+.message-content pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #f0f0f0;
+  font-size: inherit;
+}
+
+.message-content em {
+  font-style: italic;
+  color: #b0b0b0;
+}
+
+.message-content strong {
+  font-weight: 600;
+  color: #4a90e2;
+}
+
+/* Scrollbar styling */
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: #1e1e1e;
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+/* Botón de configuración */
+.settings-btn {
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #4a90e2;
+  transition: color 0.2s;
+  z-index: 10;
+}
+.settings-btn:hover {
+  color: #357abd;
+}
+
+/* Modal de configuración */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+.modal.show {
+  display: flex;
+}
+.modal-content {
+  background: #232323;
+  margin: auto;
+  padding: 32px 24px 24px 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  min-width: 320px;
+  max-width: 90vw;
+  color: #e0e0e0;
+  position: relative;
+  animation: modalIn 0.2s;
+}
+@keyframes modalIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 2rem;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.close:hover {
+  color: #f87171;
+}
+.modal-content h2 {
+  margin-bottom: 24px;
+  color: #4a90e2;
+  font-size: 1.3rem;
+  text-align: left;
+}
+.modal-content .setting-group {
+  margin-bottom: 18px;
+}
+
+/* Ocultar la sección de settings si existe */
+.settings {
+  display: none !important;
+}
+
+.settings-icon {
+  width: 28px;
+  height: 28px;
+  display: block;
+  filter: invert(1) brightness(2) grayscale(0.2) drop-shadow(0 1px 2px #0008);
+  transition: filter 0.2s;
+}
+.settings-btn:hover .settings-icon {
+  filter: invert(1) brightness(2.5) grayscale(0) drop-shadow(0 2px 4px #000a);
+}
+
+@media (max-width: 600px) {
+  .settings-icon {
+    width: 24px;
+    height: 24px;
+  }
+}
