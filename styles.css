@@ -267,6 +267,42 @@ body {
   }
 }
 
+@media (max-width: 600px) {
+  .header {
+    position: relative;
+    padding-top: 16px;
+    padding-bottom: 8px;
+  }
+  .header h1 {
+    font-size: 1.3rem;
+    text-align: center;
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .settings-btn {
+    top: 8px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    padding: 2px;
+    z-index: 10;
+  }
+  .settings-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+  .header p {
+    font-size: 0.95rem;
+    text-align: center;
+    margin-top: 8px;
+    margin-bottom: 0;
+  }
+  .settings-icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
 /* Estilos adicionales para modo oscuro */
 .status.success {
   color: #4ade80;
@@ -446,4 +482,22 @@ body {
 /* Ocultar la sección de settings si existe */
 .settings {
   display: none !important;
+}
+
+.settings-icon {
+  width: 28px;
+  height: 28px;
+  display: block;
+  filter: invert(1) brightness(2) grayscale(0.2) drop-shadow(0 1px 2px #0008);
+  transition: filter 0.2s;
+}
+.settings-btn:hover .settings-icon {
+  filter: invert(1) brightness(2.5) grayscale(0) drop-shadow(0 2px 4px #000a);
+}
+
+@media (max-width: 600px) {
+  .settings-icon {
+    width: 24px;
+    height: 24px;
+  }
 }
