@@ -2,16 +2,16 @@
   "name": "chat-ia-local",
   "version": "1.0.0",
   "description": "Aplicación web para chatear con IA local usando Ollama",
-  "main": "main.js",
+  "main": "electron/main.js",
   "scripts": {
-    "start": "npx serve . -p 8000",
-    "dev": "npx serve . -p 8000 --live",
-    "electron": "electron .",
-    "electron-dev": "electron . --dev",
+    "start": "npx serve public -p 8000",
+    "dev": "npx serve public -p 8000 --live",
+    "electron": "electron electron/main.js",
+    "electron-dev": "electron electron/main.js --dev",
     "build": "electron-builder",
     "build-win": "electron-builder --win",
-    "build-win-simple": "node build-win.js",
-    "package-win": "node package-win.js",
+    "build-win-simple": "node tools/build-win.js",
+    "package-win": "node tools/package-win.js",
     "build-mac": "electron-builder --mac",
     "build-linux": "electron-builder --linux",
     "test": "echo \"No tests specified\" && exit 0"
@@ -44,22 +44,23 @@
       "output": "dist"
     },
     "files": [
-      "**/*",
+      "public/**/*",
+      "electron/**/*",
       "!node_modules/**/*",
       "!dist/**/*",
       "!build/**/*"
     ],
     "win": {
       "target": "dir",
-      "icon": "assets/icon.ico"
+      "icon": "public/assets/icon.ico"
     },
     "mac": {
       "target": "dmg",
-      "icon": "assets/icon.icns"
+      "icon": "public/assets/icon.icns"
     },
     "linux": {
       "target": "AppImage",
-      "icon": "assets/icon.png"
+      "icon": "public/assets/icon.png"
     }
   },
   "repository": {
