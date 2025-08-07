@@ -5,11 +5,13 @@ Esta aplicación puede ejecutarse como app de escritorio nativa usando Electron,
 ## 🚀 Instalación y Uso
 
 ### Prerrequisitos
+
 - [Node.js](https://nodejs.org/) 18+
 - [Ollama](https://ollama.ai/) instalado y ejecutándose
 - Al menos un modelo descargado (ej: `llama3:8b`)
 
 ### Instalación
+
 1. **Instala dependencias** (desde la raíz del proyecto):
    ```bash
    npm install
@@ -31,6 +33,7 @@ Esta aplicación puede ejecutarse como app de escritorio nativa usando Electron,
    ```
 
 ## 📁 Estructura del Proyecto (actual)
+
 ```
 ia/
 ├── package.json           # Configuración principal (npm, scripts, Electron)
@@ -57,6 +60,7 @@ ia/
 ```
 
 ## 🏆 Ventajas sobre la versión web
+
 - Sin problemas de CORS
 - Menú nativo y atajos de teclado
 - Configuración persistente local
@@ -66,6 +70,7 @@ ia/
 - No requiere servidor web
 
 ## 🛠️ Menú de la app de escritorio
+
 - **Archivo**: Nueva conversación, exportar, salir
 - **Editar**: Cortar, copiar, pegar, deshacer, rehacer
 - **Ver**: Recargar, herramientas de desarrollador, zoom, pantalla completa
@@ -73,6 +78,7 @@ ia/
 - **Ayuda**: Acerca de, documentación, reportar problema
 
 ## ⚙️ Configuración y almacenamiento
+
 - La configuración se guarda automáticamente en el sistema operativo:
   - **Windows**: `%APPDATA%/chat-ia-local/config.json`
   - **macOS**: `~/Library/Application Support/chat-ia-local/config.json`
@@ -80,10 +86,12 @@ ia/
 - Se recuerda la URL del API, modelo y preferencias.
 
 ## 🧩 Personalización
+
 - Cambia el icono reemplazando los archivos en `public/assets/` (icon.png, icon.ico, icon.icns)
 - Cambia el nombre editando `package.json` (campos `name`, `productName`, `build.appId`)
 
 ## 🆘 Solución de Problemas
+
 - **No se encuentra Electron**: `npm install`
 - **No se encuentra electron-store**: `npm install electron-store`
 - **No conecta a Ollama**: Verifica que Ollama esté corriendo y la URL sea correcta
@@ -91,11 +99,13 @@ ia/
 - **Error de rutas**: Ejecuta los comandos desde la raíz del proyecto
 
 ## 🛠️ Desarrollo
+
 - Modo desarrollo: `npm run electron-dev`
 - Herramientas de desarrollador: F12 o menú Ver
 - Logs: consola donde ejecutas la app
 
 ## 📦 Distribución
+
 - Windows: `npm run build-win` (genera ejecutable en `dist/`)
 - macOS: `npm run build-mac`
 - Linux: `npm run build-linux`

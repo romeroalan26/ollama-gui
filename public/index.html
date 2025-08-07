@@ -3,84 +3,528 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chat con IA Local</title>
+    <title>Chat IA Local</title>
     <link rel="stylesheet" href="./styles.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <div class="container">
-      <header class="header">
-        <h1>🤖 Chat con IA Local</h1>
-        <p>
-          Conectado a Ollama - Modelo: <span id="currentModel">llama3:8b</span>
-        </p>
-        <button id="openSettingsBtn" class="settings-btn" title="Configuración">
-          <img
-            src="./assets/settings.png"
-            alt="Configuración"
-            class="settings-icon"
-          />
-        </button>
-      </header>
+    <div class="app-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo">
+            <i class="fas fa-robot"></i>
+            <span>IA Local</span>
+          </div>
+          <button id="newChatBtn" class="new-chat-btn">
+            <i class="fas fa-plus"></i>
+            Nuevo Chat
+          </button>
+        </div>
 
-      <div class="chat-container">
-        <div class="chat-messages" id="chatMessages">
-          <div class="message ai-message">
-            <div class="message-content">
-              <strong>IA:</strong> ¡Hola! Soy tu asistente de IA local. ¿En qué
-              puedo ayudarte hoy?
+        <div class="model-selector">
+          <label for="modelSelect">Modelo:</label>
+          <div class="model-search-container">
+            <input
+              type="text"
+              id="modelSearch"
+              placeholder="Buscar modelo..."
+              class="model-search"
+            />
+            <i class="fas fa-search search-icon"></i>
+          </div>
+          <select id="modelSelect">
+            <!-- Modelos Llama 3 -->
+            <optgroup label="Llama 3 (Meta)">
+              <option value="llama3:8b" selected>
+                llama3:8b - Equilibrado (4.7GB)
+              </option>
+              <option value="llama3:70b">
+                llama3:70b - Máxima calidad (40GB)
+              </option>
+              <option value="llama3:8b-instruct">
+                llama3:8b-instruct - Instrucciones (4.7GB)
+              </option>
+              <option value="llama3:70b-instruct">
+                llama3:70b-instruct - Instrucciones (40GB)
+              </option>
+            </optgroup>
+
+            <!-- Modelos Mistral -->
+            <optgroup label="Mistral AI">
+              <option value="mistral:7b">mistral:7b - Base (4.1GB)</option>
+              <option value="mistral:7b-instruct">
+                mistral:7b-instruct - Instrucciones (4.1GB)
+              </option>
+              <option value="mistral:7b-openorca">
+                mistral:7b-openorca - Conversacional (4.1GB)
+              </option>
+              <option value="mixtral:8x7b">
+                mixtral:8x7b - Mixture of Experts (26GB)
+              </option>
+              <option value="mixtral:8x7b-instruct">
+                mixtral:8x7b-instruct - Instrucciones (26GB)
+              </option>
+            </optgroup>
+
+            <!-- Modelos Code -->
+            <optgroup label="Code Llama (Meta)">
+              <option value="codellama:7b">codellama:7b - Base (3.8GB)</option>
+              <option value="codellama:7b-instruct">
+                codellama:7b-instruct - Instrucciones (3.8GB)
+              </option>
+              <option value="codellama:7b-python">
+                codellama:7b-python - Python (3.8GB)
+              </option>
+              <option value="codellama:13b">
+                codellama:13b - Base (7.3GB)
+              </option>
+              <option value="codellama:13b-instruct">
+                codellama:13b-instruct - Instrucciones (7.3GB)
+              </option>
+              <option value="codellama:34b">codellama:34b - Base (19GB)</option>
+              <option value="codellama:34b-instruct">
+                codellama:34b-instruct - Instrucciones (19GB)
+              </option>
+            </optgroup>
+
+            <!-- Modelos Neural Chat -->
+            <optgroup label="Neural Chat (Intel)">
+              <option value="neural-chat:7b">
+                neural-chat:7b - Conversacional (4.1GB)
+              </option>
+              <option value="neural-chat:7b-v3">
+                neural-chat:7b-v3 - Versión 3 (4.1GB)
+              </option>
+            </optgroup>
+
+            <!-- Modelos Phi -->
+            <optgroup label="Phi (Microsoft)">
+              <option value="phi:2.7b">
+                phi:2.7b - Pequeño y rápido (1.7GB)
+              </option>
+              <option value="phi:3.5">phi:3.5 - Equilibrado (2.1GB)</option>
+              <option value="phi:3.5-mini">phi:3.5-mini - Mini (1.8GB)</option>
+            </optgroup>
+
+            <!-- Modelos Gemma -->
+            <optgroup label="Gemma (Google)">
+              <option value="gemma:2b">gemma:2b - Pequeño (1.4GB)</option>
+              <option value="gemma:7b">gemma:7b - Equilibrado (4.4GB)</option>
+              <option value="gemma:2b-it">
+                gemma:2b-it - Instrucciones (1.4GB)
+              </option>
+              <option value="gemma:7b-it">
+                gemma:7b-it - Instrucciones (4.4GB)
+              </option>
+            </optgroup>
+
+            <!-- Modelos Qwen -->
+            <optgroup label="Qwen (Alibaba)">
+              <option value="qwen:7b">qwen:7b - Base (4.1GB)</option>
+              <option value="qwen:7b-chat">
+                qwen:7b-chat - Conversacional (4.1GB)
+              </option>
+              <option value="qwen:14b">qwen:14b - Base (7.7GB)</option>
+              <option value="qwen:14b-chat">
+                qwen:14b-chat - Conversacional (7.7GB)
+              </option>
+            </optgroup>
+
+            <!-- Modelos Yi -->
+            <optgroup label="Yi (01.AI)">
+              <option value="yi:6b">yi:6b - Base (3.8GB)</option>
+              <option value="yi:6b-chat">
+                yi:6b-chat - Conversacional (3.8GB)
+              </option>
+              <option value="yi:34b">yi:34b - Base (19GB)</option>
+              <option value="yi:34b-chat">
+                yi:34b-chat - Conversacional (19GB)
+              </option>
+            </optgroup>
+
+            <!-- Modelos especializados -->
+            <optgroup label="Especializados">
+              <option value="gpt-oss:20b">
+                gpt-oss:20b - Open Source (13GB)
+              </option>
+              <option value="orca-mini:3b">
+                orca-mini:3b - Mini conversacional (1.9GB)
+              </option>
+              <option value="orca-mini:7b">
+                orca-mini:7b - Conversacional (4.1GB)
+              </option>
+              <option value="llama2:7b">
+                llama2:7b - Llama 2 base (3.8GB)
+              </option>
+              <option value="llama2:7b-chat">
+                llama2:7b-chat - Llama 2 chat (3.8GB)
+              </option>
+              <option value="llama2:13b">
+                llama2:13b - Llama 2 base (7.3GB)
+              </option>
+              <option value="llama2:13b-chat">
+                llama2:13b-chat - Llama 2 chat (7.3GB)
+              </option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="sidebar-actions">
+          <button
+            id="settingsBtn"
+            class="sidebar-btn"
+            title="Configurar modelo, tema y otras opciones"
+          >
+            <i class="fas fa-cog"></i>
+            Configuración
+          </button>
+          <button
+            id="exportBtn"
+            class="sidebar-btn"
+            title="Descargar la conversación actual como archivo JSON"
+          >
+            <i class="fas fa-download"></i>
+            Exportar
+          </button>
+          <button
+            id="clearBtn"
+            class="sidebar-btn"
+            title="Eliminar todos los mensajes y comenzar una nueva conversación"
+          >
+            <i class="fas fa-trash"></i>
+            Limpiar
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Chat Area -->
+      <main class="main-content">
+        <header class="chat-header">
+          <div class="chat-info">
+            <h1>Chat con IA Local</h1>
+            <div class="model-status">
+              <span class="status-dot"></span>
+              <span id="currentModel">llama3:8b</span>
+              <button
+                id="checkModelBtn"
+                class="check-model-btn"
+                title="Verificar estado del modelo"
+              >
+                <i class="fas fa-sync-alt"></i>
+              </button>
+            </div>
+          </div>
+          <div class="header-actions">
+            <button id="toggleSidebarBtn" class="header-btn">
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+        </header>
+
+        <div class="chat-container">
+          <div class="chat-messages" id="chatMessages">
+            <div class="welcome-message">
+              <div class="welcome-icon">
+                <i class="fas fa-robot"></i>
+              </div>
+              <h2>¡Hola! Soy tu asistente de IA local</h2>
+              <p>Estoy aquí para ayudarte. ¿En qué puedo asistirte hoy?</p>
+              <div class="suggestions">
+                <button
+                  class="suggestion-btn"
+                  title="Haz clic para usar esta sugerencia como mensaje inicial"
+                >
+                  Explícame un concepto
+                </button>
+                <button
+                  class="suggestion-btn"
+                  title="Haz clic para usar esta sugerencia como mensaje inicial"
+                >
+                  Ayúdame con código
+                </button>
+                <button
+                  class="suggestion-btn"
+                  title="Haz clic para usar esta sugerencia como mensaje inicial"
+                >
+                  Escribe un texto
+                </button>
+                <button
+                  class="suggestion-btn"
+                  title="Haz clic para usar esta sugerencia como mensaje inicial"
+                >
+                  Resuelve un problema
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-input-area">
+            <div class="input-container">
+              <div class="input-wrapper">
+                <textarea
+                  id="messageInput"
+                  placeholder="Escribe tu mensaje aquí..."
+                  rows="1"
+                ></textarea>
+                <div class="input-actions">
+                  <button
+                    id="attachBtn"
+                    class="input-btn"
+                    title="Adjuntar archivo"
+                  >
+                    <i class="fas fa-paperclip"></i>
+                  </button>
+                  <button
+                    id="sendButton"
+                    class="send-button"
+                    title="Enviar mensaje"
+                  >
+                    <i class="fas fa-paper-plane"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="input-footer">
+                <span class="status" id="status"></span>
+                <div class="shortcuts">
+                  <span>Enter para enviar</span>
+                  <span>Shift+Enter para nueva línea</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </main>
+    </div>
 
-        <div class="chat-input-container">
-          <div class="input-group">
-            <textarea
-              id="messageInput"
-              placeholder="Escribe tu mensaje aquí..."
-              rows="3"
-            ></textarea>
-            <button id="sendButton" class="send-button">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22,2 15,22 11,13 2,9"></polygon>
-              </svg>
-            </button>
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2><i class="fas fa-cog"></i> Configuración</h2>
+          <button class="close" id="closeSettingsBtn">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="setting-group">
+            <label for="apiUrl">URL del API:</label>
+            <input
+              type="text"
+              id="apiUrl"
+              value="http://localhost:11434"
+              placeholder="http://localhost:11434"
+            />
+            <small
+              >URL del servidor Ollama. Cambia solo si tu servidor está en otra
+              dirección.</small
+            >
           </div>
-          <div class="status" id="status"></div>
+          <div class="setting-group">
+            <label for="modalModelSelect">Modelo:</label>
+            <div class="model-search-container">
+              <input
+                type="text"
+                id="modalModelSearch"
+                placeholder="Buscar modelo..."
+                class="model-search"
+              />
+              <i class="fas fa-search search-icon"></i>
+            </div>
+            <select id="modalModelSelect">
+              <!-- Modelos Llama 3 -->
+              <optgroup label="Llama 3 (Meta)">
+                <option value="llama3:8b" selected>
+                  llama3:8b - Equilibrado (4.7GB)
+                </option>
+                <option value="llama3:70b">
+                  llama3:70b - Máxima calidad (40GB)
+                </option>
+                <option value="llama3:8b-instruct">
+                  llama3:8b-instruct - Instrucciones (4.7GB)
+                </option>
+                <option value="llama3:70b-instruct">
+                  llama3:70b-instruct - Instrucciones (40GB)
+                </option>
+              </optgroup>
+
+              <!-- Modelos Mistral -->
+              <optgroup label="Mistral AI">
+                <option value="mistral:7b">mistral:7b - Base (4.1GB)</option>
+                <option value="mistral:7b-instruct">
+                  mistral:7b-instruct - Instrucciones (4.1GB)
+                </option>
+                <option value="mistral:7b-openorca">
+                  mistral:7b-openorca - Conversacional (4.1GB)
+                </option>
+                <option value="mixtral:8x7b">
+                  mixtral:8x7b - Mixture of Experts (26GB)
+                </option>
+                <option value="mixtral:8x7b-instruct">
+                  mixtral:8x7b-instruct - Instrucciones (26GB)
+                </option>
+              </optgroup>
+
+              <!-- Modelos Code -->
+              <optgroup label="Code Llama (Meta)">
+                <option value="codellama:7b">
+                  codellama:7b - Base (3.8GB)
+                </option>
+                <option value="codellama:7b-instruct">
+                  codellama:7b-instruct - Instrucciones (3.8GB)
+                </option>
+                <option value="codellama:7b-python">
+                  codellama:7b-python - Python (3.8GB)
+                </option>
+                <option value="codellama:13b">
+                  codellama:13b - Base (7.3GB)
+                </option>
+                <option value="codellama:13b-instruct">
+                  codellama:13b-instruct - Instrucciones (7.3GB)
+                </option>
+                <option value="codellama:34b">
+                  codellama:34b - Base (19GB)
+                </option>
+                <option value="codellama:34b-instruct">
+                  codellama:34b-instruct - Instrucciones (19GB)
+                </option>
+              </optgroup>
+
+              <!-- Modelos Neural Chat -->
+              <optgroup label="Neural Chat (Intel)">
+                <option value="neural-chat:7b">
+                  neural-chat:7b - Conversacional (4.1GB)
+                </option>
+                <option value="neural-chat:7b-v3">
+                  neural-chat:7b-v3 - Versión 3 (4.1GB)
+                </option>
+              </optgroup>
+
+              <!-- Modelos Phi -->
+              <optgroup label="Phi (Microsoft)">
+                <option value="phi:2.7b">
+                  phi:2.7b - Pequeño y rápido (1.7GB)
+                </option>
+                <option value="phi:3.5">phi:3.5 - Equilibrado (2.1GB)</option>
+                <option value="phi:3.5-mini">
+                  phi:3.5-mini - Mini (1.8GB)
+                </option>
+              </optgroup>
+
+              <!-- Modelos Gemma -->
+              <optgroup label="Gemma (Google)">
+                <option value="gemma:2b">gemma:2b - Pequeño (1.4GB)</option>
+                <option value="gemma:7b">gemma:7b - Equilibrado (4.4GB)</option>
+                <option value="gemma:2b-it">
+                  gemma:2b-it - Instrucciones (1.4GB)
+                </option>
+                <option value="gemma:7b-it">
+                  gemma:7b-it - Instrucciones (4.4GB)
+                </option>
+              </optgroup>
+
+              <!-- Modelos Qwen -->
+              <optgroup label="Qwen (Alibaba)">
+                <option value="qwen:7b">qwen:7b - Base (4.1GB)</option>
+                <option value="qwen:7b-chat">
+                  qwen:7b-chat - Conversacional (4.1GB)
+                </option>
+                <option value="qwen:14b">qwen:14b - Base (7.7GB)</option>
+                <option value="qwen:14b-chat">
+                  qwen:14b-chat - Conversacional (7.7GB)
+                </option>
+              </optgroup>
+
+              <!-- Modelos Yi -->
+              <optgroup label="Yi (01.AI)">
+                <option value="yi:6b">yi:6b - Base (3.8GB)</option>
+                <option value="yi:6b-chat">
+                  yi:6b-chat - Conversacional (3.8GB)
+                </option>
+                <option value="yi:34b">yi:34b - Base (19GB)</option>
+                <option value="yi:34b-chat">
+                  yi:34b-chat - Conversacional (19GB)
+                </option>
+              </optgroup>
+
+              <!-- Modelos especializados -->
+              <optgroup label="Especializados">
+                <option value="gpt-oss:20b">
+                  gpt-oss:20b - Open Source (13GB)
+                </option>
+                <option value="orca-mini:3b">
+                  orca-mini:3b - Mini conversacional (1.9GB)
+                </option>
+                <option value="orca-mini:7b">
+                  orca-mini:7b - Conversacional (4.1GB)
+                </option>
+                <option value="llama2:7b">
+                  llama2:7b - Llama 2 base (3.8GB)
+                </option>
+                <option value="llama2:7b-chat">
+                  llama2:7b-chat - Llama 2 chat (3.8GB)
+                </option>
+                <option value="llama2:13b">
+                  llama2:13b - Llama 2 base (7.3GB)
+                </option>
+                <option value="llama2:13b-chat">
+                  llama2:13b-chat - Llama 2 chat (7.3GB)
+                </option>
+              </optgroup>
+            </select>
+            <small
+              >Selecciona el modelo que quieres usar. Usa el buscador para
+              encontrar rápidamente el modelo deseado. Para descargar un modelo:
+              <code>ollama pull nombre-del-modelo</code></small
+            >
+          </div>
+          <div class="setting-group">
+            <label for="themeSelect">Tema:</label>
+            <select id="themeSelect">
+              <option value="dark" selected>Oscuro</option>
+              <option value="light">Claro</option>
+              <option value="auto">Automático</option>
+            </select>
+            <small
+              >Automático sigue la configuración de tu sistema operativo.</small
+            >
+          </div>
+          <div class="setting-group">
+            <label>
+              <input type="checkbox" id="autoScroll" checked />
+              Auto-scroll en nuevos mensajes
+            </label>
+            <small
+              >Desplaza automáticamente al último mensaje cuando llega una nueva
+              respuesta.</small
+            >
+          </div>
+          <div class="setting-group">
+            <label>
+              <input type="checkbox" id="markdownEnabled" checked />
+              Habilitar Markdown
+            </label>
+            <small
+              >Formatea automáticamente el texto de las respuestas (negrita,
+              cursiva, código). Mejora la legibilidad.</small
+            >
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="saveSettingsBtn" class="btn-primary">Guardar</button>
+          <button id="cancelSettingsBtn" class="btn-secondary">Cancelar</button>
         </div>
       </div>
     </div>
 
-    <!-- Modal de configuración -->
-    <div id="settingsModal" class="modal">
-      <div class="modal-content">
-        <span class="close" id="closeSettingsBtn">&times;</span>
-        <h2>Configuración</h2>
-        <div class="setting-group">
-          <label for="modelSelect">Modelo:</label>
-          <select id="modelSelect">
-            <option value="llama3:8b" selected>llama3:8b</option>
-            <option value="llama3:70b">llama3:70b</option>
-            <option value="mistral:7b">mistral:7b</option>
-            <option value="codellama:7b">codellama:7b</option>
-          </select>
-        </div>
-        <div class="setting-group">
-          <label for="apiUrl">URL del API:</label>
-          <input
-            type="text"
-            id="apiUrl"
-            value="http://localhost:11434"
-            placeholder="http://localhost:11434"
-          />
-        </div>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Procesando...</p>
       </div>
     </div>
 
